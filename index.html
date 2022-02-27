@@ -8,6 +8,7 @@
   integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
 
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
@@ -20,68 +21,65 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Nombres</label>
-          <input type="text" id="name" required class="form-control validate">
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="last_name" required class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Apellidos</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="email" required class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Correo</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="phone" required class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Telefono Movil</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="city" required class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Ciudad</label>
-        </div>
-        <div class="md-form mb-5">
-          <i class="fas fa-envelope prefix grey-text"></i>
-          <input type="email" id="address" required class="form-control validate">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Dirección</label>
-        </div>
+        <form id="payuForm" class="finish-pay" method="post" target="_blank">
+          <input name="merchantId" hidden value="530932" />
+          <input name="accountId" hidden value="532826" />
+
+          <div class="form-group">
+            <label for="payuName">Nombre</label>
+            <input type="text" required name="payerFullName" class="form-control " id="payuName"
+              aria-describedby="nameHelp">
+            <small id="nameHelp" class="form-text text-muted">Nombre completo</small>
+          </div>
+          <div class="form-group">
+            <label for="payuEmail">Correo</label>
+            <input type="email" required name="buyerEmail" class="form-control " id="payuEmail"
+              aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">Correo electrónico</small>
+          </div>
+
+          <div class="form-group">
+            <label for="payuTelephone">Teléfono</label>
+            <input type="tel" required name="telephone" class="form-control " id="payuTelephone"
+              aria-describedby="telephoneHelp">
+            <small id="telephoneHelp" class="form-text text-muted">Teléfono</small>
+          </div>
+
+          <input name="shippingCountry" hidden value="CO" />
+
+          <div class="form-group">
+            <label for="payuCity">Ciudad</label>
+            <input type="text" required name="shippingCity" class="form-control " id="payuCity"
+              aria-describedby="cityHelp">
+            <small id="cityHelp" class="form-text text-muted">Ciudad de Entrega</small>
+          </div>
+
+
+          <div class="form-group">
+            <label for="payuAddress">Dirección</label>
+            <input type="text" required name="shippingAddress" class="form-control " id="payuAddress"
+              aria-describedby="addressHelp">
+            <small id="addressHelp" class="form-text text-muted">Direccion de facturación</small>
+          </div>
+
+          <input name="description" value="Descripcion del producto" hidden />
+          <input name="referenceCode" value="" hidden />
+          <input name="amount" value="" hidden />
+          <input name="tax" value="0" hidden />
+          <input name="taxReturnBase" value="0" hidden />
+          <input name="currency" value="COP" hidden />
+          <input name="signature" value="" hidden />
+          <input name="test" value="0" hidden />
+          <input name="extra1" value="" hidden />
+          <input name="extra2" value="" hidden />
+          <input name="extra3" value="" hidden />
+          <input name="responseUrl" value=" https://kiero.co/pay_status?extra4=" hidden />
+          <input name=" confirmationUrl" value="https://api.kieroapi.net/payuComplete" hidden />
+          <button class="button-finish-payu btn btn-primary" id="submit" name="submit" type="submit">
+            Continuar con la transacción
+          </button>
+        </form>
       </div>
-      <form id="payuForm" className="finish-pay" method="post"
-        action="https://checkout.payulatam.com/ppp-web-gateway-payu/" //
-        action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/" target="_blank">
-        <input name="merchantId"  value="530932" />
-        <input name="accountId"  value="532826" />
-        <input name="description"  value="Descripcion del producto" />
-        <input name="referenceCode"  value="" />
-        <input name="amount"  value="" />
-        <input name="tax"  value="0" />
-        <input name="taxReturnBase"  value="0" />
-        <input name="currency"  value="COP" />
-        <input name="signature"  value="" />
-        <input name="test"  value="0" />
-        <input name="buyerEmail"  value="" />
-        <input name="telephone"  value="" />
-        <input name="shippingCountry"  value="CO" />
-        <input name="shippingCity"  value="" />
-        <input name="shippingAddress"  value="" />
-        <input name="payerFullName"  value="" />
-        <input name="extra1"  value="" />
-        <input name="extra2"  value="" />
-        <input name="extra3"  value="" />
-        <input name="responseUrl"  // value={"https://kieroapi.org/pay_status?extra4=" +
-              value=" https://kiero.co/pay_status?extra4="
-                
-            />
-            <input
-              name=" confirmationUrl"  value="https://api.kieroapi.net/payuComplete" //
-          value="https://api.kieroapi.org/payuComplete" />
-        <button class="button-finish-payu btn btn-primary" onmousedown="validateFormFinal()" name="Submit"
-          type="submit"> Continuar con la transacción</button </form>
     </div>
   </div>
 </div>
@@ -92,38 +90,6 @@
 
 <script>
 
-  function validateFormFinal(event) {
-
-    var ref_code = "kieroco-" + new Date().getTime();
-    var discount = setDiscount(10000, 1);
-    var signature = CryptoJS.MD5(
-      "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
-    );
-    console.log(signature);
-    $("input[name='signature']")[0].setAttribute('value', signature.toString());
-    var name = $("#name").val();
-    var last_name = $("#last_name").val();
-    var email = $("#email").val();
-    var phone = $("#phone").val();
-    var city = $("#city").val();
-    var address = $("#address").val();
-    if (!name || !last_name || !email || !phone || !city || !address) {
-      console.log('prueba');
-      return false;
-    }
-    else {
-      console.log('prueba22');
-      $("input[name='telephone']")[0].setAttribute('value', phone);
-      $("input[name='payerFullName']")[0].setAttribute('value', name + ' ' + last_name);
-      $("input[name='shippingAddress']")[0].setAttribute('value', address);
-      $("input[name='shippingCity']")[0].setAttribute('value', city);
-      $("input[name='buyerEmail']")[0].setAttribute('value', email);
-      $("input[name='referenceCode']")[0].setAttribute('value', ref_code);
-      $("input[name='amount']")[0].setAttribute('value', discount.toString());
-
-    }
-
-  }
   function setDiscount(priceProduct, quantityProduct) {
     let discountPercentage = 0;
     if (quantityProduct === 2) {
@@ -143,5 +109,34 @@
     return PriceDiscount;
   }
 
+  $("#payuForm").on('submit', function (e) {
+    e.preventDefault();
+    // Para definir la crypto
+    var ref_code = "kieroco-" + new Date().getTime();
+    var discount = setDiscount(10000, 1);
+    var signature = CryptoJS.MD5(
+      "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
+    );
+    $("#submit").attr('disabled', '').html("<i class='fas fa-spinner fa-pulse'></i> Verificando información")
+
+    let parameters = $(this).serializeArray();
+    parameters[14].value = signature.toString();
+    parameters[9].value = ref_code;
+    parameters[10].value = discount.toString();
+    console.log(parameters);
+
+    $.ajax({
+      url: "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/",
+      type: "POST",
+      data: parameters,
+      dataType: 'json',
+      async: false,
+    }).done(function (data) {
+      $("#submit").removeAttr('disabled').text("Continuar con la transacción");
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      alert(textStatus + ': ' + errorThrown);
+    }).always(function (data) {
+    });
+  });
 
 </script>
