@@ -10,7 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true" style="color: black;">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h4 class="modal-title w-100 font-weight-bold">Por favor agregue los datos de envío</h4>
@@ -79,8 +79,8 @@
   </div>
 </div>
 <div class="text-center">
-  <a href="" class="btn w-100 d-flex" id="openModalPayu" data-toggle="modal"
-    style="background: rgb(207, 19, 44) none repeat scroll 0% 0%; color: rgb(255, 255, 255);font-size: 24px;border-radius: 60px; justify-content: center; align-items: center; height: 4rem;"
+  <a href="#" class="btn btn-danger w-100 h-100 d-flex" id="openModalPayu" data-toggle="modal"
+    style="font-size: 24px;border-radius: 60px; justify-content: center; align-items: center;"
     data-target="#modalRegisterForm">Comprar</a>
 </div>
 
@@ -111,7 +111,7 @@
     let signature = CryptoJS.MD5(
       "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
     );
-    document.getElementById("signature").value = signature;
+    document.getElementById("signature").value = signature.toString();
     document.getElementById("amount").value = discount;
     document.getElementById("referenceCode").value = ref_code
   });
