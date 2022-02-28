@@ -1,17 +1,15 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-  integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
-  integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
-<script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
-
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+  aria-hidden="true" style="color: black;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -21,7 +19,8 @@
         </button>
       </div>
       <div class="modal-body mx-3">
-        <form id="payuForm" class="finish-pay" method="post" target="_blank">
+        <form id="payuForm" class="finish-pay" method="post" target="_blank"
+          action="https://checkout.payulatam.com/ppp-web-gateway-payu/">
           <input name="merchantId" hidden value="530932" />
           <input name="accountId" hidden value="532826" />
 
@@ -59,33 +58,30 @@
             <label for="payuAddress">Dirección</label>
             <input type="text" required name="shippingAddress" class="form-control " id="payuAddress"
               aria-describedby="addressHelp">
-            <small id="addressHelp" class="form-text text-muted">Direccion de facturación</small>
+            <small id="addressHelp" class="form-text text-muted">Dirección de facturación</small>
           </div>
 
           <input name="description" value="Descripcion del producto" hidden />
-          <input name="referenceCode" value="" hidden />
-          <input name="amount" value="" hidden />
+          <input name="referenceCode" id="referenceCode" hidden />
+          <input name="amount" hidden id="amount" />
           <input name="tax" value="0" hidden />
           <input name="taxReturnBase" value="0" hidden />
           <input name="currency" value="COP" hidden />
-          <input name="signature" value="" hidden />
+          <input name="signature" id="signature" hidden />
           <input name="test" value="0" hidden />
-          <input name="extra1" value="" hidden />
-          <input name="extra2" value="" hidden />
-          <input name="extra3" value="" hidden />
           <input name="responseUrl" value=" https://kiero.co/pay_status?extra4=" hidden />
           <input name=" confirmationUrl" value="https://api.kieroapi.net/payuComplete" hidden />
-          <button class="button-finish-payu btn btn-primary" id="submit" name="submit" type="submit">
-            Continuar con la transacción
-          </button>
+          <input class="button-finish-payu btn btn-primary" id="submit" name="submit" type="submit"
+            value="Continuar con la transaccion">
         </form>
       </div>
     </div>
   </div>
 </div>
 <div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
-    Modal Register Form</a>
+  <a href="" class="btn w-100 d-flex" id="openModalPayu" data-toggle="modal"
+    style="background: rgb(207, 19, 44) none repeat scroll 0% 0%; color: rgb(255, 255, 255);font-size: 24px;border-radius: 60px; justify-content: center; align-items: center; height: 4rem;"
+    data-target="#modalRegisterForm">Comprar</a>
 </div>
 
 <script>
@@ -108,35 +104,15 @@
 
     return PriceDiscount;
   }
+  document.getElementById("openModalPayu").addEventListener("click", function (e) {
 
-  $("#payuForm").on('submit', function (e) {
-    e.preventDefault();
-    // Para definir la crypto
-    var ref_code = "kieroco-" + new Date().getTime();
-    var discount = setDiscount(10000, 1);
-    var signature = CryptoJS.MD5(
+    let ref_code = "kieroco-" + new Date().getTime();
+    let discount = setDiscount(10000, 1);
+    let signature = CryptoJS.MD5(
       "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
     );
-    $("#submit").attr('disabled', '').html("<i class='fas fa-spinner fa-pulse'></i> Verificando información")
-
-    let parameters = $(this).serializeArray();
-    parameters[14].value = signature.toString();
-    parameters[9].value = ref_code;
-    parameters[10].value = discount.toString();
-    console.log(parameters);
-
-    $.ajax({
-      url: "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/",
-      type: "POST",
-      data: parameters,
-      dataType: 'json',
-      async: false,
-    }).done(function (data) {
-      $("#submit").removeAttr('disabled').text("Continuar con la transacción");
-    }).fail(function (jqXHR, textStatus, errorThrown) {
-      alert(textStatus + ': ' + errorThrown);
-    }).always(function (data) {
-    });
+    document.getElementById("signature").value = signature;
+    document.getElementById("amount").value = discount;
+    document.getElementById("referenceCode").value = ref_code
   });
-
 </script>
