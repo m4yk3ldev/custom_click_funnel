@@ -4,6 +4,8 @@
   integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true" style="color: black;">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -18,7 +20,6 @@
           action="https://checkout.payulatam.com/ppp-web-gateway-payu/">
           <input name="merchantId" hidden value="530932" />
           <input name="accountId" hidden value="532826" />
-
           <div class="form-group my-2">
             <label for="payuName" style="font-size: 1rem !important;">Nombre</label>
             <input type="text" required name="payerFullName" class="form-control " id="payuName"
@@ -33,7 +34,6 @@
             <small id="emailHelp" class="form-text text-muted" style="font-size: 0.8rem !important;">Correo
               electrónico</small>
           </div>
-
           <div class="form-group my-2">
             <label for="payuTelephone" style="font-size: 1rem !important;">Teléfono</label>
             <input type="tel" required name="telephone" class="form-control " id="payuTelephone"
@@ -41,9 +41,7 @@
             <small id="telephoneHelp" class="form-text text-muted"
               style="font-size: 0.8rem !important;">Teléfono</small>
           </div>
-
           <input name="shippingCountry" hidden value="CO" />
-
           <div class="form-group my-2">
             <label for="payuCity" style="font-size: 1rem !important;">Ciudad</label>
             <input type="text" required name="shippingCity" class="form-control " id="payuCity"
@@ -51,8 +49,6 @@
             <small id="cityHelp" class="form-text text-muted" style="font-size: 0.8rem !important;">Ciudad de
               Entrega</small>
           </div>
-
-
           <div class="form-group my-2">
             <label for="payuAddress" style="font-size: 1rem !important;">Dirección</label>
             <input type="text" required name="shippingAddress" class="form-control " id="payuAddress"
@@ -60,7 +56,6 @@
             <small id="addressHelp" class="form-text text-muted" style="font-size: 0.8rem !important;">Dirección de
               facturación</small>
           </div>
-
           <input name="description" value="Descripcion del producto" hidden />
           <input name="referenceCode" id="referenceCode" hidden />
           <input name="amount" hidden id="amount" />
@@ -72,7 +67,7 @@
           <input name="responseUrl" value=" https://kiero.co/pay_status?extra4=" hidden />
           <input name=" confirmationUrl" value="https://api.kieroapi.net/payuComplete" hidden />
           <input class="button-finish-payu btn btn-primary my-2" id="submit" name="submit" type="submit"
-            value="Continuar con la transaccion">
+            value="Continuar con la transaccion" onclick="ValidateFormFinal()" onpress="ValidateFormFinal()" />
         </form>
       </div>
     </div>
@@ -81,11 +76,9 @@
 <div class="text-center">
   <a href="#" class="btn btn-danger w-100 h-100 d-flex" id="openModalPayu" data-bs-toggle="modal"
     style="font-size: 24px;border-radius: 60px; justify-content: center; align-items: center;"
-    data-bs-target="#modalRegisterForm">Comprar</a>
+    data-bs-target="#modalRegisterForm" onclick="AsignValue()" onpress="AsignValue()">Comprar Ya!</a>
 </div>
-
 <script>
-
   function setDiscount(priceProduct, quantityProduct) {
     let discountPercentage = 0;
     if (quantityProduct === 2) {
@@ -94,21 +87,16 @@
     if (quantityProduct >= 3) {
       discountPercentage = 15;
     }
-
     let PriceDiscount =
       priceProduct *
       quantityProduct *
       (1 - parseFloat("." + discountPercentage).toFixed(2));
-
     PriceDiscount = ~~PriceDiscount;
-
     return PriceDiscount;
   }
-
   function AsignValue() {
-
     let ref_code = "kieroco-" + new Date().getTime();
-    let discount = setDiscount(10000, 1);
+    let discount = setDiscount(2439133, 1);
     let signature = CryptoJS.MD5(
       "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
     );
@@ -116,6 +104,167 @@
     document.getElementById("amount").value = discount;
     document.getElementById("referenceCode").value = ref_code
   }
-  document.getElementById("openModalPayu").addEventListener("click", AsignValue);
-  document.getElementById("openModalPayu").addEventListener("press", AsignValue);
+
+  async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
+    console.log({nombre, correo, telephone, ciudad, direccion})
+    const data = {
+      active: true,
+      asin: "B00DBT6IAI",
+      brand: "Lee Global Imports and Consulting, Inc.",
+      breadcum: [
+        {
+          category_id: "16310161",
+          name: "Industria y científico"
+        },
+        {
+          category_id: "6054382011",
+          name: "Equipo y suministros para servicio"
+        },
+        {
+          category_id: "18098890011",
+          name: "Electrodomésticos y equipos para restaurantes"
+        },
+        {
+          category_id: "18098891011",
+          name: "Equipos comerciales para bebidas"
+        },
+        {
+          category_id: "5315101011",
+          name: "Cafeteras comerciales"
+        }
+      ],
+      category: {
+        banner: null,
+        in_menu: 0,
+        name: "Cafeteras comerciales",
+        parent_id: 18098891011,
+        parent_path: "16310161/6054382011/18098890011/18098891011/5315101011",
+        status: 1,
+        updated_since: null
+      },
+      category_id: "5315101011",
+      category_tree: "",
+      color: "Stainless Steel",
+      description: "Opción de accesorios para los cerveceros de café / airpot. Transbordador de acero inoxidable de 1.5 galones (5,7 litros) para mantener una bebida adicional. Contenedor para mantener la bebida adicional lista y disponible para servir.",
+      discount: "0.00",
+      earnings_percentage: "0.37",
+      discount_percentage: "16.00",
+      features: "Digitally controlled brewers\nUse with air gap, vacuum insulated shuttles or airpots\nLong lasting\nProfessional use\nCommercial use",
+      format: "",
+      genre: "None",
+      images: [
+        {
+          file_id: 1009761965,
+          main: 1,
+          product_id: 72550177,
+          status: 1,
+          updated_since: null,
+          url: "https://images-na.ssl-images-amazon.com/images/I/41JeQFvvTVL.jpg"
+        }
+      ],
+      information: "Cerveceros controlados digitalmente\nUse con espacio de aire, lanzaderas aisladas al vacío o aire acondicionado.\nDuradero\nUso profesional\nUso comercial",
+      is_prime: 0,
+      length: "12.51966",
+      model: "CS-LL",
+      package_height: "10.78738",
+      package_length: "16.181070000000002",
+      package_quantity: "-1",
+      package_weight: "11",
+      package_width: "12.795250000000001",
+      platform: "",
+      price: 1892677,
+      product_global_asin: "B00DBT6IAI",
+      product_global_color: "Stainless Steel",
+      product_global_id: 72550177,
+      product_global_images: [],
+      product_global_package_weight: 2,
+      product_global_price: 1892677,
+      product_global_title: "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
+      product_group: "BISS",
+      product_id: 72550177,
+      size: "",
+      sku: "",
+      status: 1,
+      stock: 6,
+      store_id: 16,
+      title: "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
+      type: "Biss",
+      cost_of_goods_sold: "1192387",
+      gross_margin: "700290.00",
+      sub_category: "Cafeteras comerciales",
+      asin_link: "amazon.com/dp/B00DBT6IAI",
+      product_link: "https://kiero.co/detalle/72550177",
+      subcategory_link: "kiero.co/categoria/Cafeteras-comerciales",
+      margin_percent: "0.37",
+      user: {
+        is_active: 1,
+        last_name: "Rodriguez",
+        name: "SpiceStock",
+        photo: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
+        type_kiero_leader: null,
+        user_id: 16
+      },
+      product: {
+        count_transaction: 0,
+        favorite: false,
+        suggested: false
+      },
+      variants: [],
+      weight: "10.50061753906",
+      width: "16.25981",
+      first_name: String(nombre).split(" ")[0],
+      email: correo,
+      second_email: correo,
+      full_name: nombre,
+      phone: telephone,
+      second_phone: telephone,
+      city: ciudad,
+      address: direccion,
+      country: "CO",
+      type_id: "",
+      num_id: "",
+      id: "as",
+      lead_type: "Prueba",
+      category: "Una ahi",
+      sub_category: "Mas de una",
+      type_client: "Cliente",
+      product_title: "Cafereta",
+      product_description: "Para hacer cafe",
+      product_id: "12345",
+      product_image: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
+      product_brand: "Categoria",
+      product_category: "Categoria",
+      product_subcategory: "Categoria Sub",
+      price_product: 2439133,
+      rating: 2,
+      gross_margin_percent: "123",
+      main_link: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
+      last_name: nombre,
+    }
+    let dataJson = JSON.stringify(data);
+    console.log(dataJson);
+    console.log(JSON.parse(dataJson));
+    // Post data
+    let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
+    let postResp = axios.post(urlZoho, data, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => {
+      console.log(response);
+    });
+  }
+
+  async function ValidateFormFinal(e) {
+    let nombre = document.getElementById("payuName");
+    let correo = document.getElementById("payuEmail");
+    let telephone = document.getElementById("payuTelephone");
+    let ciudad = document.getElementById("payuCity");
+    let direccion = document.getElementById("payuAddress");
+    if (nombre.validationMessage === "" && correo.validationMessage === "" && telephone.validationMessage === "" && ciudad.validationMessage === "" && direccion.validationMessage === "") {
+      await SendZoho({nombre: nombre.value, correo: correo.value, telephone: telephone.value, direccion: direccion.value, ciudad: ciudad.value});
+    } else {
+      console.log("Sin datos");
+    }
+  }
 </script>
