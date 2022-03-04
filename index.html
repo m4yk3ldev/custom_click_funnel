@@ -79,6 +79,7 @@
     data-bs-target="#modalRegisterForm" onclick="AsignValue()" onpress="AsignValue()">Comprar Ya!</a>
 </div>
 <script>
+  const PRICE_PRODUCT = 2439133;
   function setDiscount(priceProduct, quantityProduct) {
     let discountPercentage = 0;
     if (quantityProduct === 2) {
@@ -96,7 +97,7 @@
   }
   function AsignValue() {
     let ref_code = "kieroco-" + new Date().getTime();
-    let discount = setDiscount(2439133, 1);
+    let discount = setDiscount(PRICE_PRODUCT, 1);
     let signature = CryptoJS.MD5(
       "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
     );
@@ -106,114 +107,19 @@
   }
 
   async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
-    console.log({nombre, correo, telephone, ciudad, direccion})
+    const fullname = String(nombre).split(" ");
+    let last_name = "";
+    fullname.map((name, i) => {
+      if (i >= 1) {
+        last_name += String(name + " ");
+      }
+    })
+    let ref_code = "kieroco-" + new Date().getTime();
     const data = {
-      active: true,
-      asin: "B00DBT6IAI",
-      brand: "Lee Global Imports and Consulting, Inc.",
-      breadcum: [
-        {
-          category_id: "16310161",
-          name: "Industria y científico"
-        },
-        {
-          category_id: "6054382011",
-          name: "Equipo y suministros para servicio"
-        },
-        {
-          category_id: "18098890011",
-          name: "Electrodomésticos y equipos para restaurantes"
-        },
-        {
-          category_id: "18098891011",
-          name: "Equipos comerciales para bebidas"
-        },
-        {
-          category_id: "5315101011",
-          name: "Cafeteras comerciales"
-        }
-      ],
-      category: {
-        banner: null,
-        in_menu: 0,
-        name: "Cafeteras comerciales",
-        parent_id: 18098891011,
-        parent_path: "16310161/6054382011/18098890011/18098891011/5315101011",
-        status: 1,
-        updated_since: null
-      },
-      category_id: "5315101011",
-      category_tree: "",
-      color: "Stainless Steel",
-      description: "Opción de accesorios para los cerveceros de café / airpot. Transbordador de acero inoxidable de 1.5 galones (5,7 litros) para mantener una bebida adicional. Contenedor para mantener la bebida adicional lista y disponible para servir.",
-      discount: "0.00",
-      earnings_percentage: "0.37",
-      discount_percentage: "16.00",
-      features: "Digitally controlled brewers\nUse with air gap, vacuum insulated shuttles or airpots\nLong lasting\nProfessional use\nCommercial use",
-      format: "",
-      genre: "None",
-      images: [
-        {
-          file_id: 1009761965,
-          main: 1,
-          product_id: 72550177,
-          status: 1,
-          updated_since: null,
-          url: "https://images-na.ssl-images-amazon.com/images/I/41JeQFvvTVL.jpg"
-        }
-      ],
-      information: "Cerveceros controlados digitalmente\nUse con espacio de aire, lanzaderas aisladas al vacío o aire acondicionado.\nDuradero\nUso profesional\nUso comercial",
-      is_prime: 0,
-      length: "12.51966",
-      model: "CS-LL",
-      package_height: "10.78738",
-      package_length: "16.181070000000002",
-      package_quantity: "-1",
-      package_weight: "11",
-      package_width: "12.795250000000001",
-      platform: "",
-      price: 1892677,
-      product_global_asin: "B00DBT6IAI",
-      product_global_color: "Stainless Steel",
-      product_global_id: 72550177,
-      product_global_images: [],
-      product_global_package_weight: 2,
-      product_global_price: 1892677,
-      product_global_title: "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
-      product_group: "BISS",
-      product_id: 72550177,
-      size: "",
-      sku: "",
-      status: 1,
-      stock: 6,
-      store_id: 16,
-      title: "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
-      type: "Biss",
-      cost_of_goods_sold: "1192387",
-      gross_margin: "700290.00",
-      sub_category: "Cafeteras comerciales",
-      asin_link: "amazon.com/dp/B00DBT6IAI",
-      product_link: "https://kiero.co/detalle/72550177",
-      subcategory_link: "kiero.co/categoria/Cafeteras-comerciales",
-      margin_percent: "0.37",
-      user: {
-        is_active: 1,
-        last_name: "Rodriguez",
-        name: "SpiceStock",
-        photo: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
-        type_kiero_leader: null,
-        user_id: 16
-      },
-      product: {
-        count_transaction: 0,
-        favorite: false,
-        suggested: false
-      },
-      variants: [],
-      weight: "10.50061753906",
-      width: "16.25981",
-      first_name: String(nombre).split(" ")[0],
+      first_name: fullname[0],
+      last_name: last_name.trim(),
       email: correo,
+      brand: "BUNN",
       second_email: correo,
       full_name: nombre,
       phone: telephone,
@@ -223,28 +129,32 @@
       country: "CO",
       type_id: "",
       num_id: "",
-      id: "as",
-      lead_type: "Prueba",
-      category: "Una ahi",
-      sub_category: "Mas de una",
-      type_client: "Cliente",
-      product_title: "Cafereta",
-      product_description: "Para hacer cafe",
-      product_id: "12345",
-      product_image: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
+      id: ref_code,
+      lead_type: "Usuario Registrado que Accedió a los Detalles del Producto",
+      category: "Cafeteras comerciales",
+      category_id: "5315101011",
+      sub_category: "Cafeteras comerciales",
+      type_client: "standard",
+      product_title: "Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH",
+      product_description: "The BUNN 13300.0011 VP171BLK Pourover Coffee Brewer with One Warmer is perfect for convenience stores, family restaurants, cafes or diners. Totally portable, it can be used anywhere theres a plug Just pour cold water in the top and coffee brews immediately, up to 3.8 gallons per hour directly into standard 64ounce decanters. Its stainless steel exterior with black finish allows for quick and easy clean up and the SplashGuard funnel protects the user from burns. Decanter not included.",
+      product_id: "72550138",
+      product_image: "https://images-na.ssl-images-amazon.com/images/I/413zcfw6tEL.jpg",
       product_brand: "Categoria",
-      product_category: "Categoria",
-      product_subcategory: "Categoria Sub",
-      price_product: 2439133,
-      rating: 2,
-      gross_margin_percent: "123",
-      main_link: "https://images-na.ssl-images-amazon.com/images/I/41HwfyDOKrL.jpg",
-      last_name: nombre,
+      product_category: "Industria y científico",
+      product_subcategory: "Cafeteras comerciales",
+      price_product: PRICE_PRODUCT,
+      rating: "N/A",
+      cost_of_goods_sold: "1496636",
+      gross_margin_percent: "0.36",
+      main_link: "https://images-na.ssl-images-amazon.com/images/I/413zcfw6tEL.jpg",
+      gross_margin: "700290.00",
+      sub_category: "Cafeteras comerciales",
+      asin_link: "amazon.com/dp/B0030ZVVNC",
+      product_link: "https://kiero.co/detalle/72550138",
+      subcategory_link: "kiero.co/categoria/Cafeteras-comerciales",
+      margin_percent: "0.37",
+      weight: "21.99992912498",
     }
-    let dataJson = JSON.stringify(data);
-    console.log(dataJson);
-    console.log(JSON.parse(dataJson));
-    // Post data
     let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
     let postResp = axios.post(urlZoho, data, {
       headers: {
