@@ -196,7 +196,7 @@
     document.getElementById("signature").value = signature.toString();
     document.getElementById("amount").value = discount;
     document.getElementById("referenceCode").value = ref_code;
-    document.getElementById("description").value = '{{ data.product_description }}';
+    document.getElementById("description").value = '{{ data.description }}';
   }
 
   async function SendZoho({ nombre, correo, telephone, ciudad, direccion }) {
@@ -227,7 +227,7 @@
       category_id: "{{ data.breadcum[0].category_id }}",
       sub_category: "{{ data.category.name }}",
       type_client: "standard",
-      product_title: '{{data.product_global_title}}',
+      product_title: '{{ data.product_global_title }}',
       product_description: '{{data.description}}',
       product_id: "{{ data.product_id}}",
       product_image: "{{ data.images[0].url }}",
@@ -243,12 +243,12 @@
       gross_margin_percent: "{{data.margin_percent }}",
       active: true,
       asin: "{{ data.asin }}",
-      product_link: "{{data.product_link }}",
+      product_link: "https://kiero.co/detalle/{{ data.product_id }}",
       subcategory_link: "{{ data.subcategory_link }}",
       margin_percent: "{{ data.margin_percent }}",
       weight: "{{ data.weight }}",
       click_funnel: true,
-      funnel_name: "{{data.category.name}}",
+      funnel_name: "Hair Irons, Curlers, Organizers",
       page_number: "Poner pagina",
     };
     let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
