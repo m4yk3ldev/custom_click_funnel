@@ -12,8 +12,8 @@ def main(*args, **kwargs):
     print('Argument List:', str(sys.argv))
 
     # Capturar el ID del product_global
-    id_product = "51328465"
-    #  id_product = str(sys.argv[1])
+    # id_product = "51328465"
+    id_product = sys.argv[1]
 
     # declarar donde esta la plantilla
     file_loader = FileSystemLoader('templates')
@@ -42,7 +42,7 @@ def main(*args, **kwargs):
         # print(output)
 
         # declara donde generar el HTML
-        filename = "generada/SendZoho.html"
+        filename = f"generada/SendZoho-{id_product}.html"
         if not os.path.exists("generada"):
             os.makedirs("generada")
         with open(filename, 'w') as f:
