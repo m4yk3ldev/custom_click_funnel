@@ -1,0 +1,290 @@
+<div
+  class="modal fade"
+  id="modalRegisterForm"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  style="color: black"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4
+          class="modal-title w-100 font-weight-bold"
+          style="font-size: 2rem !important"
+        >
+          Por favor agregue los datos de envío
+        </h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body mx-2">
+        <form
+          id="payuForm"
+          class="finish-pay"
+          method="post"
+          target="_blank"
+          action="https://checkout.payulatam.com/ppp-web-gateway-payu/"
+        >
+          <input name="merchantId" hidden value="530932" />
+          <input name="accountId" hidden value="532826" />
+          <div class="form-group my-2">
+            <label for="payuName" style="font-size: 1rem !important"
+              >Nombre</label
+            >
+            <input
+              type="text"
+              required
+              name="payerFullName"
+              class="form-control"
+              id="payuName"
+              aria-describedby="nameHelp"
+            />
+            <small
+              id="nameHelp"
+              class="form-text text-muted"
+              style="font-size: 0.8rem !important"
+              >Nombre completo</small
+            >
+          </div>
+          <div class="form-group my-2">
+            <label for="payuEmail" style="font-size: 1rem !important"
+              >Correo</label
+            >
+            <input
+              type="email"
+              required
+              name="buyerEmail"
+              class="form-control"
+              id="payuEmail"
+              aria-describedby="emailHelp"
+            />
+            <small
+              id="emailHelp"
+              class="form-text text-muted"
+              style="font-size: 0.8rem !important"
+              >Correo electrónico</small
+            >
+          </div>
+          <div class="form-group my-2">
+            <label for="payuTelephone" style="font-size: 1rem !important"
+              >Teléfono</label
+            >
+            <input
+              type="tel"
+              required
+              name="telephone"
+              class="form-control"
+              id="payuTelephone"
+              aria-describedby="telephoneHelp"
+            />
+            <small
+              id="telephoneHelp"
+              class="form-text text-muted"
+              style="font-size: 0.8rem !important"
+              >Teléfono</small
+            >
+          </div>
+          <input name="shippingCountry" hidden value="CO" />
+          <div class="form-group my-2">
+            <label for="payuCity" style="font-size: 1rem !important"
+              >Ciudad</label
+            >
+            <input
+              type="text"
+              required
+              name="shippingCity"
+              class="form-control"
+              id="payuCity"
+              aria-describedby="cityHelp"
+            />
+            <small
+              id="cityHelp"
+              class="form-text text-muted"
+              style="font-size: 0.8rem !important"
+              >Ciudad de Entrega</small
+            >
+          </div>
+          <div class="form-group my-2">
+            <label for="payuAddress" style="font-size: 1rem !important"
+              >Dirección</label
+            >
+            <input
+              type="text"
+              required
+              name="shippingAddress"
+              class="form-control"
+              id="payuAddress"
+              aria-describedby="addressHelp"
+            />
+            <small
+              id="addressHelp"
+              class="form-text text-muted"
+              style="font-size: 0.8rem !important"
+              >Dirección de facturación</small
+            >
+          </div>
+          <input name="description" id="description" hidden />
+          <input name="referenceCode" id="referenceCode" hidden />
+          <input name="amount" hidden id="amount" />
+          <input name="tax" value="0" hidden />
+          <input name="taxReturnBase" value="0" hidden />
+          <input name="currency" value="COP" hidden />
+          <input name="signature" id="signature" hidden />
+          <input name="test" value="0" hidden />
+          <input
+            name="responseUrl"
+            value=" https://kiero.co/pay_status?extra4="
+            hidden
+          />
+          <input
+            name=" confirmationUrl"
+            value="https://api.kieroapi.net/payuComplete"
+            hidden
+          />
+          <input
+            class="button-finish-payu btn btn-primary my-2"
+            id="submit"
+            name="submit"
+            type="submit"
+            value="Continuar con la transacción"
+            onclick="ValidateFormFinal()"
+            onpress="ValidateFormFinal()"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  crossorigin="anonymous"
+></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+  function setDiscount(priceProduct, quantityProduct) {
+    let discountPercentage = 0;
+    if (quantityProduct === 2) {
+      discountPercentage = 10;
+    }
+    if (quantityProduct >= 3) {
+      discountPercentage = 15;
+    }
+    let PriceDiscount =
+      priceProduct *
+      quantityProduct *
+      (1 - parseFloat("." + discountPercentage).toFixed(2));
+    PriceDiscount = ~~PriceDiscount;
+    return PriceDiscount;
+  }
+
+  function AsignValue() {
+    let ref_code = "kieroco-" + new Date().getTime();
+    let discount = setDiscount({{ data.price }}, 1);
+    let signature = CryptoJS.MD5(
+      "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
+    );
+    document.getElementById("signature").value = signature.toString();
+    document.getElementById("amount").value = discount;
+    document.getElementById("referenceCode").value = ref_code;
+    document.getElementById("description").value = '{{ data.product_description }}';
+  }
+
+  async function SendZoho({ nombre, correo, telephone, ciudad, direccion }) {
+    const fullname = String(nombre).split(" ");
+    let last_name = " ";
+    fullname.map((name, i) => {
+      if (i >= 1) {
+        last_name += String(name + " ");
+      }
+    });
+    let ref_code = "kieroco-" + new Date().getTime();
+    const data = {
+      first_name: fullname[0],
+      last_name: last_name.trim(),
+      city: ciudad,
+      address: direccion,
+      email: correo,
+      second_email: correo,
+      phone: telephone,
+      second_phone: "",
+      type_id: "",
+      num_id: "0",
+      id: ref_code,
+      country: "CO",
+      lead_type: "Usuario Registrado que Accedió a los Detalles del Producto",
+      brand: "{{ data.brand }}",
+      category: "{{ data.breadcum[0].name }}",
+      category_id: "{{ data.breadcum[0].category_id }}",
+      sub_category: "{{ data.category.name }}",
+      type_client: "standard",
+      product_title: '{{data.product_global_title}}',
+      product_description: '{{data.description}}',
+      product_id: "{{ data.product_id}}",
+      product_image: "{{ data.images[0].url }}",
+      main_link: "{{ data.images[0].url }}",
+      product_brand: "{{ data.brand }}",
+      product_category: "{{ data.breadcum[0].name }}",
+      product_subcategory: "{{ data.category.name }}",
+      price_product: {{data.price}},
+      rating: "0.0",
+      cost_of_goods_sold: "{{ data.cost_of_goods_sold}}",
+      asin_link: "{{ data.asin_link }}",
+      gross_margin: "{{ data.gross_margin }}",
+      gross_margin_percent: "{{data.margin_percent }}",
+      active: true,
+      asin: "{{ data.asin }}",
+      product_link: "{{data.product_link }}",
+      subcategory_link: "{{ data.subcategory_link }}",
+      margin_percent: "{{ data.margin_percent }}",
+      weight: "{{ data.weight }}",
+      click_funnel: true,
+      funnel_name: "{{data.category.name}}",
+      page_number: "Poner pagina",
+    };
+    let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
+    let postResp = axios
+      .post(urlZoho, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        //console.log(response);
+      });
+  }
+
+  async function ValidateFormFinal(e) {
+    let nombre = document.getElementById("payuName");
+    let correo = document.getElementById("payuEmail");
+    let telephone = document.getElementById("payuTelephone");
+    let ciudad = document.getElementById("payuCity");
+    let direccion = document.getElementById("payuAddress");
+    if (
+      nombre.validationMessage === "" &&
+      correo.validationMessage === "" &&
+      telephone.validationMessage === "" &&
+      ciudad.validationMessage === "" &&
+      direccion.validationMessage === ""
+    ) {
+      await SendZoho({
+        nombre: nombre.value,
+        correo: correo.value,
+        telephone: telephone.value,
+        direccion: direccion.value,
+        ciudad: ciudad.value,
+      });
+    } else {
+      console.log("Sin datos");
+    }
+  }
+</script>
