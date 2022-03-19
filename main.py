@@ -1,8 +1,8 @@
-import json
 import os
 import sys
-from jinja2 import Environment, FileSystemLoader
+
 import requests
+from jinja2 import Environment, FileSystemLoader
 
 
 def main(*args, **kwargs):
@@ -30,7 +30,7 @@ def main(*args, **kwargs):
 
     # Convertir respuesta del API a JSON
     data = response.json()
-    # Hacer la operacion siempre que este presente data
+    # Hacer la operación siempre que este presente data
     if response.status_code == 200 and 'data' in data:
         data_render = data['data']
 
