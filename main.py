@@ -5,7 +5,7 @@ import requests
 from jinja2 import Environment, FileSystemLoader
 
 
-def main(*args, **kwargs):
+def main():
 
     # Obtener el argumento
     print('Number of arguments:', len(sys.argv), 'arguments.')
@@ -15,7 +15,7 @@ def main(*args, **kwargs):
     # id_product = "51328465"
     id_product = sys.argv[1]
 
-    # declarar donde esta la plantilla
+    # declarar donde está la plantilla
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
     template = env.get_template('SendZoho.html')
