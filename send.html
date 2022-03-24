@@ -92,14 +92,14 @@
 
     function AsignValue() {
         let ref_code = "kieroco-" + new Date().getTime();
-        let discount = setDiscount({{ data.price_product }}, 1);
+        let discount = setDiscount(703595, 1);
         let signature = CryptoJS.MD5(
             "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
         );
         document.getElementById("signature").value = signature.toString();
         document.getElementById("amount").value = discount;
         document.getElementById("referenceCode").value = ref_code;
-        document.getElementById("description").value = `{{ data.product_description | string }}`;
+        document.getElementById("description").value = `Freidora Cosori de aire, libreta gratuita con 100 recetas`;
     }
 
     async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
@@ -124,35 +124,35 @@
             num_id: "0",
             id: ref_code,
             country: "CO",
-            lead_type: "{{ data.lead_type }}",
-            brand: "{{ data.brand }}",
-            category: "{{ data.category }}",
-            category_id: "{{ data.category_id }}",
-            sub_category: "{{ data.sub_category }}",
-            type_client: "{{ data.type_client }}",
-            product_title: '{{ data.product_title }}',
-            product_description: `{{data.product_description | safe}}`,
-            product_id: "{{ data.product_id}}",
-            product_image: "{{ data.product_image }}",
-            main_link: "{{ data.main_link }}",
-            product_brand: "{{ data.product_brand }}",
-            product_category: "{{ data.product_category }}",
-            product_subcategory: "{{ data.product_subcategory }}",
-            price_product: {{data.price_product}},
-            rating: "{{ data.rating }}",
-            cost_of_goods_sold: "{{ data.cost_of_goods_sold}}",
-            asin_link: "{{ data.asin_link }}",
-            gross_margin: "{{ data.gross_margin }}",
-            gross_margin_percent: "{{data.gross_margin_percent }}",
-            active: {{ data.active }},
-            asin: "{{ data.asin }}",
-            product_link: "{{ data.product_link }}",
-            subcategory_link: "{{ data.subcategory_link }}",
-            margin_percent: "{{ data.margin_percent }}",
-            weight: "{{ data.weight }}",
+            lead_type: "Usuario Registrado que Accedió a los Detalles del Producto",
+            brand: "COSORI",
+            category: "Freidoras",
+            category_id: "17659095011",
+            sub_category: "Freidoras de aire",
+            type_client: "standard",
+            product_title: 'Makita XRH05ZR 18V ​​X2 36V LXT Litio cepillado 1 pulg. Herramienta de martillo giratorio sin cable solo renovado',
+            product_description: `El MAKITA 18V x2 LXT Lithiumion 36V inalámbrico 1 pulg. El martillo giratorio se alimenta con 2 baterías de 18V LXT, brindando el tiempo de alimentación y ejecución para las demandas con cable sin dejar la plataforma 18V. 2 baterías de litio de litio 18V`,
+            product_id: "4240925",
+            product_image: "https://images-na.ssl-images-amazon.com/images/I/41k6e6BedAL.jpg",
+            main_link: "https://images-na.ssl-images-amazon.com/images/I/41k6e6BedAL.jpg",
+            product_brand: "Makita",
+            product_category: "Herramientas",
+            product_subcategory: "Martillos perforadores eléctricos",
+            price_product: 703595,
+            rating: "0.2",
+            cost_of_goods_sold: "1220391",
+            asin_link: "amazon.com/dp/B09MMMBM5P",
+            gross_margin: "555519.00",
+            gross_margin_percent: "0.37",
+            active: true,
+            asin: "B09MMMBM5P",
+            product_link: "https://kiero.co/detalle/4240925",
+            subcategory_link: "kiero.co/categoria/Martillos perforadores eléctricos",
+            margin_percent: "37.00",
+            weight: "10.09936",
             click_funnel: true,
-            funnel_name: "{{ data.funnel_name }}",
-            page_number: "{{ data.page_number }}",
+            funnel_name: "Martillos perforadores eléctricos",
+            page_number: "Makita XRH05ZR 18V ​​X2 36V LXT Litio cepillado 1 pulg. Herramienta de martillo giratorio sin cable solo renovado",
         };
         let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
         let postResp = axios.post(urlZoho, data, {headers: {"Content-Type": "application/json",},}).then(() => {
