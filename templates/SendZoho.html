@@ -90,6 +90,26 @@
         return PriceDiscount;
     }
 
+    function handleFormatNumber(number) {
+        return number
+            .toString()
+            .split(".")[0]
+            .replace(/(.)(?=(\d{3})+$)/g, "$1.");
+    };
+
+    function getDate() {
+        let date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let time = date.toLocaleTimeString();
+        if (month < 10) {
+            return `${day}-0${month}-${year}-${time}`;
+        } else {
+            return `${day}-${month}-${year}-${time}`;
+        }
+    };
+
     function AsignValue() {
         let ref_code = "kieroco-" + new Date().getTime();
         let discount = setDiscount({{ data.price_product }}, 1);
@@ -102,18 +122,12 @@
         document.getElementById("description").value = `{{ data.product_description | string }}`;
     }
 
-    async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
-        const fullname = String(nombre).split(" ");
-        let last_name = " ";
-        fullname.map((name, i) => {
-            if (i >= 1) {
-                last_name += String(name + " ");
-            }
-        });
+    async function SendZoho({nombre, apellidos, correo, telephone, ciudad, direccion}) {
+
         let ref_code = "kieroco-" + new Date().getTime();
         const data = {
-            first_name: fullname[0],
-            last_name: last_name.trim(),
+            first_name: nombre,
+            last_name: apellidos,
             city: ciudad,
             address: direccion,
             email: correo,
@@ -172,12 +186,44 @@
             ciudad.validationMessage === "" &&
             direccion.validationMessage === ""
         ) {
+            const fullname = String(nombre.value).split(" ");
+            let last_name = " ";
+            fullname.map((name, i) => {
+                if (i >= 0) {
+                    last_name += String(name + " ");
+                }
+            });
             await SendZoho({
-                nombre: nombre.value,
+                nombre: fullname[0],
+                apellidos: last_name.trim(),
                 correo: correo.value,
                 telephone: telephone.value,
                 direccion: direccion.value,
                 ciudad: ciudad.value,
+            });
+
+            fbq("track", "InitiateCheckout", {
+                content_ids: "{{ data.product_id}}",
+                content_name: '{{ data.product_title }}',
+                product_group: '{{ data.type }}',
+                content_type: "product",
+                content_category: "{{ data.product_category }}",
+                contents: [
+                    {
+                        id: "{{ data.product_id}}",
+                        quantity: 1,
+                    },
+                ],
+                currency: "COP",
+                value: {{ data.price_product }},
+                num_items: 1,
+                em: correo,
+                ph: 57 + handleFormatNumber(telephone),
+                event_name: "InitiateCheckout",
+                eventId: "InitiateCheckout_Kiero_Group_2022",
+                user_name: fullname[0],
+                user_last_name: last_name,
+                timeTransaction: getDate(),
             });
         } else {
             console.log("Sin datos");
