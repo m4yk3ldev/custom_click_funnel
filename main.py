@@ -15,7 +15,6 @@ def main():
     template = env.get_template('SendZoho.html')
 
     # declara el API a consumir
-    req_url_2 = "https://api.kieroapi.net/variations/product_global/" + id_product
     req_url = "https://api.kieroapi.net/variations/product_funnel/" + id_product
     headersList = {}
     payload = {}
