@@ -59,8 +59,8 @@
                     <input name="responseUrl" value=" https://kiero.co/pay_status?extra4=" hidden/>
                     <input name=" confirmationUrl" value="https://api.kieroapi.net/payuComplete" hidden/>
                     <input class="button-finish-payu btn btn-primary my-2" id="submit" name="submit" type="submit"
-                           value="Continuar con la transacción" onclick="ValidateFormFinal()"
-                           onpress="ValidateFormFinal()"/>
+                           value="Continuar con la transacción" onclick="ValidateFormFinal();ValidateFB();"
+                           onpress="ValidateFormFinal();ValidateFB();"/>
                 </form>
             </div>
         </div>
@@ -122,12 +122,19 @@
         document.getElementById("description").value = `{{ data.product_description | string }}`;
     }
 
-    async function SendZoho({nombre, apellidos, correo, telephone, ciudad, direccion}) {
+    async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
+        const fullname = String(nombre).split(" ");
+        let last_name = " ";
+        fullname.map((name, i) => {
+            if (i >= 0) {
+                last_name += String(name + " ");
+            }
+        });
 
         let ref_code = "kieroco-" + new Date().getTime();
         const data = {
             first_name: nombre,
-            last_name: apellidos,
+            last_name: last_name,
             city: ciudad,
             address: direccion,
             email: correo,
@@ -186,6 +193,31 @@
             ciudad.validationMessage === "" &&
             direccion.validationMessage === ""
         ) {
+            await SendZoho({
+                nombre: nombre.value,
+                correo: correo.value,
+                telephone: telephone.value,
+                direccion: direccion.value,
+                ciudad: ciudad.value,
+            });
+
+        } else {
+            console.log("Sin datos");
+        }
+    }
+
+    function sendFB(nombre, last_name, correo, telephone) {
+    }
+
+    function ValidateFB(e) {
+        let nombre = document.getElementById("payuName");
+        let correo = document.getElementById("payuEmail");
+        let telephone = document.getElementById("payuTelephone");
+        if (
+            nombre.validationMessage === "" &&
+            correo.validationMessage === "" &&
+            telephone.validationMessage === ""
+        ) {
             const fullname = String(nombre.value).split(" ");
             let last_name = " ";
             fullname.map((name, i) => {
@@ -193,15 +225,6 @@
                     last_name += String(name + " ");
                 }
             });
-            await SendZoho({
-                nombre: fullname[0],
-                apellidos: last_name.trim(),
-                correo: correo.value,
-                telephone: telephone.value,
-                direccion: direccion.value,
-                ciudad: ciudad.value,
-            });
-
             fbq("track", "InitiateCheckout", {
                 content_ids: "{{ data.product_id}}",
                 content_name: '{{ data.product_title }}',
@@ -217,16 +240,19 @@
                 currency: "COP",
                 value: {{ data.price_product }},
                 num_items: 1,
-                em: correo,
-                ph: 57 + handleFormatNumber(telephone),
+                em: correo.value ?? " ",
+                ph: 57 + handleFormatNumber(telephone.value ?? " "),
                 event_name: "InitiateCheckout",
                 eventId: "InitiateCheckout_Kiero_Group_2022",
-                user_name: fullname[0],
-                user_last_name: last_name,
+                user_name: fullname[0] ?? " ",
+                user_last_name: last_name.trim(),
                 timeTransaction: getDate(),
             });
+
+
         } else {
             console.log("Sin datos");
         }
     }
+
 </script>

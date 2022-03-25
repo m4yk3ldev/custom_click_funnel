@@ -22,13 +22,11 @@ def main():
 
     # Obtener valores del api para construir la plantilla
     response = requests.get(req_url, data=payload, headers=headersList)
-    response_2 = requests.get(req_url_2, data=payload, headers=headersList)
 
     # Convertir respuesta del API a JSON
     data = response.json()
-    data_2 = response_2.json()
     # Hacer la operación siempre que este presente data
-    if response.status_code == 200 and 'data' in data and response_2.status_code == 200 and 'data' in data_2:
+    if response.status_code == 200 and 'data' in data:
         data_render = data['data']
         # Truncar la description a solo 254
         data_render['product_description'] = data['data']['product_description'][:254]
@@ -36,7 +34,6 @@ def main():
             data_render['active'] = "true"
         else:
             data_render['active'] = "false"
-        data_render['type'] = data_2['data']['type']
         # Mandar los datos y construir los datos
         output = template.render(data=data_render)
         # declara donde generar el HTML
@@ -47,7 +44,7 @@ def main():
             f.write(output)
             f.close()
     else:
-        print(data, data_2)
+        print(data)
 
 
 if __name__ == '__main__':
