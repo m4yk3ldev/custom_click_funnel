@@ -2,3 +2,4 @@ pylint
 tqdm
 jinja2
 requests
+djhtml
