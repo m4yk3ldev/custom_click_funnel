@@ -122,19 +122,12 @@
         document.getElementById("description").value = `{{ data.product_description | string }}`;
     }
 
-    async function SendZoho({nombre, correo, telephone, ciudad, direccion}) {
-        const fullname = String(nombre).split(" ");
-        let last_name = " ";
-        fullname.map((name, i) => {
-            if (i > 0) {
-                last_name += String(name + " ");
-            }
-        });
+    async function SendZoho({nombre, apellidos, correo, telephone, ciudad, direccion}) {
 
         let ref_code = "kieroco-" + new Date().getTime();
         const data = {
-            first_name: fullname[0] ?? " ",
-            last_name: last_name.trim(),
+            first_name: nombre ?? " ",
+            last_name: apellidos,
             city: ciudad,
             address: direccion,
             email: correo,
@@ -186,6 +179,8 @@
         let nombre = document.getElementById("payuName");
         let correo = document.getElementById("payuEmail");
         let telephone = document.getElementById("payuTelephone");
+        let ciudad = document.getElementById("payuCity");
+        let direccion = document.getElementById("payuAddress");
         if (
             nombre.validationMessage === "" &&
             correo.validationMessage === "" &&
@@ -223,7 +218,8 @@
             });
 
             await SendZoho({
-                nombre: nombre.value,
+                nombre: fullname[0],
+                apellidos: last_name.trim(),
                 correo: correo.value,
                 telephone: telephone.value,
                 direccion: direccion.value,
