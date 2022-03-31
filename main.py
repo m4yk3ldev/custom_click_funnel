@@ -12,7 +12,7 @@ def main():
     # declarar donde está la plantilla
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
-    template = env.get_template('SendZoho.html.j2')
+    template = env.get_template('SendZoho.html')
 
     # declara el API a consumir
     req_url = "https://api.kieroapi.net/variations/product_funnel/" + id_product
