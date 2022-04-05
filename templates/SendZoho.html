@@ -137,7 +137,7 @@
         document.getElementById("referenceCode").value = ref_code;
         document.getElementById("description").value = `{{ data.product_description | string }}`;
 
-        gtag('event', 'start_checkout', {
+        gtag('event', 'begin_checkout', {
             "checkout_step": 1,
             "checkout_option": "Payu",
             "value": "{{ data.price_product }}",
@@ -252,7 +252,7 @@
                         timeTransaction: getDate(),
                     }
                 );
-                gtag('event', 'checkout', {
+                gtag('event', 'checkout_progress', {
                     "checkout_step": 2,
                     "checkout_option": "Payu",
                     "value": "{{ data.price_product }}",
