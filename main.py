@@ -33,6 +33,11 @@ def main():
             data_render['active'] = "true"
         else:
             data_render['active'] = "false"
+        # Crear el breadcum
+        breadcum = ""
+        for bread in data_render['breadcum']:
+            breadcum = breadcum + bread['name'] + "/"
+        data_render['breadcum'] = breadcum.strip("/")
         # Mandar los datos y construir los datos
         output = template.render(data=data_render)
         # declara donde generar el HTML
