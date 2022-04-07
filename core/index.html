@@ -1,3 +1,64 @@
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script async="async" type="text/javascript">
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window,
+        document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '273846641433805');
+    fbq('track', 'PageView');
+</script>
+
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=273846641433805&amp;ev=PageView&amp;noscript=1"/></noscript>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-144018341-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-144018341-4');
+    gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: location.href,
+            page_path: location.pathname,
+            send_to: 'UA-144018341-4'
+        }
+    );
+</script>
+<div class="text-center">
+    <a href="#" class="btn btn-danger w-100 h-100 d-flex" id="openModalPayu" data-bs-toggle="modal"
+       style="font-size: 24px;border-radius: 60px; justify-content: center; align-items: center;"
+       data-bs-target="#modalRegisterForm" onclick="AsignValue()" onpress="AsignValue()">Comprar Ya!</a>
+</div>
+
+
+{##}
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true" style="color: black">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -6,7 +67,8 @@
                 <h4 class="modal-title w-100 font-weight-bold" style="font-size: 2rem !important">
                     Por favor agregue los datos de envío
                 </h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="modalClosePayu" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
             </div>
             <div class="modal-body mx-2">
                 <form id="formPayu" class="finish-pay" method="post" name="formPayu"
@@ -77,14 +139,14 @@
     gtag('event', 'view_item', {
         "items": [
             {
-                "id": "{{ data.product_id}}",
-                "name": "{{ data.product_title | safe }}",
-                "brand": "{{ data.brand | safe }}",
-                "category": "{{ data.breadcrumb | safe }}",
+                "id": "72550177",
+                "name": "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
+                "brand": "Lee Global Imports and Consulting, Inc.",
+                "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                 "list_position": 1,
                 "quantity": 1,
-                "price": '{{ data.price_product }}',
-                "url": "{{ data.product_link }}"
+                "price": '3409158',
+                "url": "https://kiero.co/detalle/72550177"
             }
         ]
     });
@@ -127,29 +189,29 @@
 
     function AsignValue() {
         let ref_code = "kieroco-" + new Date().getTime();
-        let discount = setDiscount({{data.price_product}}, 1);
+        let discount = setDiscount(3409158, 1);
         let signature = CryptoJS.MD5(
             "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
         );
         document.getElementById("signature").value = signature.toString();
         document.getElementById("amount").value = discount;
         document.getElementById("referenceCode").value = ref_code;
-        document.getElementById("description").value = `{{ data.product_description | string }}`;
+        document.getElementById("description").value = `Opción de accesorios para los cerveceros de café / airpot. Transbordador de acero inoxidable de 1.5 galones (5,7 litros) para mantener una bebida adicional. Contenedor para mantener la bebida adicional lista y disponible para servir.`;
 
         gtag('event', 'begin_checkout', {
             "checkout_step": 1,
             "checkout_option": "Payu",
-            "value": "{{ data.price_product }}",
+            "value": "3409158",
             "items": [
                 {
-                    "id": "{{ data.product_id}}",
-                    "name": "{{ data.product_title | safe }}",
-                    "brand": "{{ data.brand | safe }}",
-                    "category": "{{ data.breadcrumb | safe }}",
+                    "id": "72550177",
+                    "name": "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
+                    "brand": "Lee Global Imports and Consulting, Inc.",
+                    "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                     "list_position": 1,
                     "quantity": 1,
-                    "price": '{{ data.price_product }}',
-                    "url": "{{ data.product_link }}"
+                    "price": '3409158',
+                    "url": "https://kiero.co/detalle/72550177"
                 }
             ]
         });
@@ -171,35 +233,35 @@
             num_id: "0",
             id: ref_code,
             country: "CO",
-            lead_type: "{{ data.lead_type }}",
-            brand: "{{ data.brand }}",
-            category: "{{ data.category }}",
-            category_id: "{{ data.category_id }}",
-            sub_category: "{{ data.sub_category }}",
-            type_client: "{{ data.type_client }}",
-            product_title: '{{ data.product_title | safe }}',
-            product_description: `{{data.product_description | safe}}`,
-            product_id: "{{ data.product_id}}",
-            product_image: "{{ data.product_image }}",
-            main_link: "{{ data.main_link }}",
-            product_brand: "{{ data.product_brand }}",
-            product_category: "{{ data.product_category }}",
-            product_subcategory: "{{ data.product_subcategory }}",
-            price_product: {{data.price_product}},
-            rating: "{{ data.rating }}",
-            cost_of_goods_sold: "{{ data.cost_of_goods_sold}}",
-            asin_link: "{{ data.asin_link }}",
-            gross_margin: "{{ data.gross_margin }}",
-            gross_margin_percent: "{{data.gross_margin_percent }}",
-            active: {{data.active}},
-            asin: "{{ data.asin }}",
-            product_link: "{{ data.product_link }}",
-            subcategory_link: "{{ data.subcategory_link }}",
-            margin_percent: "{{ data.margin_percent }}",
-            weight: "{{ data.weight }}",
+            lead_type: "Usuario Registrado que Accedió a los Detalles del Producto",
+            brand: "Lee Global Imports and Consulting, Inc.",
+            category: "Industria y científico",
+            category_id: "16310161",
+            sub_category: "Cafeteras comerciales",
+            type_client: "standard",
+            product_title: 'GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable',
+            product_description: `Opción de accesorios para los cerveceros de café / airpot. Transbordador de acero inoxidable de 1.5 galones (5,7 litros) para mantener una bebida adicional. Contenedor para mantener la bebida adicional lista y disponible para servir.`,
+            product_id: "72550177",
+            product_image: "https://images-na.ssl-images-amazon.com/images/I/41JeQFvvTVL.jpg",
+            main_link: "https://images-na.ssl-images-amazon.com/images/I/41JeQFvvTVL.jpg",
+            product_brand: "Lee Global Imports and Consulting, Inc.",
+            product_category: "Industria y científico",
+            product_subcategory: "Cafeteras comerciales",
+            price_product: 3409158,
+            rating: "5.0",
+            cost_of_goods_sold: "1192387",
+            asin_link: "amazon.com/dp/B00DBT6IAI",
+            gross_margin: "700290.00",
+            gross_margin_percent: "0.21",
+            active: true,
+            asin: "B00DBT6IAI",
+            product_link: "https://kiero.co/detalle/72550177",
+            subcategory_link: "kiero.co/categoria/Cafeteras-comerciales",
+            margin_percent: "0.37",
+            weight: "10.50061753906",
             click_funnel: true,
-            funnel_name: "{{ data.funnel_name }}",
-            page_number: "{{ data.page_number }}",
+            funnel_name: "Cafeteras comerciales",
+            page_number: "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
         };
         let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
         let postResp = axios.post(urlZoho, data, {headers: {"Content-Type": "application/json",},})
@@ -212,6 +274,7 @@
             });
         return postResp
     }
+
 
     async function SubmitForm() {
         let nombre = document.getElementById("payuName");
@@ -236,19 +299,19 @@
             });
 
             fbq("track", "InitiateCheckout", {
-                    content_ids: "{{ data.product_id}}",
-                    content_name: '{{ data.product_title | safe }}',
-                    product_group: '{{ data.type }}',
+                    content_ids: "72550177",
+                    content_name: 'GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable',
+                    product_group: 'Biss',
                     content_type: "product",
-                    content_category: "{{ data.product_category }}",
+                    content_category: "Industria y científico",
                     contents: [
                         {
-                            id: "{{ data.product_id}}",
+                            id: "72550177",
                             quantity: 1,
                         },
                     ],
                     currency: "COP",
-                    value: {{data.price_product}},
+                    value: 3409158,
                     num_items: 1,
                     em: correo.value ?? " ",
                     ph: 57 + handleFormatNumber(telephone.value ?? " "),
@@ -262,17 +325,17 @@
             gtag('event', 'checkout_progress', {
                 "checkout_step": 2,
                 "checkout_option": "Payu",
-                "value": "{{ data.price_product }}",
+                "value": "3409158",
                 "items": [
                     {
-                        "id": "{{ data.product_id}}",
-                        "name": "{{ data.product_title | safe }}",
-                        "brand": "{{ data.brand | safe }}",
-                        "category": "{{ data.breadcrumb | safe }}",
+                        "id": "72550177",
+                        "name": "GrindMaster-Cecilware CS-LL Traslado térmico radiante, 1.5 galones, acero inoxidable",
+                        "brand": "Lee Global Imports and Consulting, Inc.",
+                        "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                         "list_position": 1,
                         "quantity": 1,
-                        "price": '{{ data.price_product }}',
-                        "url": "{{ data.product_link }}"
+                        "price": '3409158',
+                        "url": "https://kiero.co/detalle/72550177"
                     }
                 ]
             });
@@ -288,8 +351,10 @@
             responseZoho ? formPayu.submit() : responseZoho
         } else {
             button.value = "Continuar con la transacción";
-            button.classList.replace("btn-secondary", "btn-primary")
+            button.classList.replace("btn-secondary","btn-primary")
             console.log("Sin datos");
         }
-    }
+    };
 </script>
+</body>
+</html>
