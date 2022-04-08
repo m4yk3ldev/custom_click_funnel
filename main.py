@@ -22,7 +22,6 @@ def main():
     # Obtener valores del api para construir la plantilla
     response = requests.get(req_url, data=payload, headers=headersList)
 
-
     # Convertir respuesta del API a JSON
     data = response.json()
 
