@@ -284,7 +284,7 @@
                 direccion: direccion.value,
                 ciudad: ciudad.value,
             });
-            const formPayu = document.forms[0];
+            const formPayu = document.forms["formPayu"];
             responseZoho ? formPayu.submit() : responseZoho
         } else {
             button.value = "Continuar con la transacción";
