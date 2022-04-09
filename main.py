@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -6,23 +7,23 @@ from jinja2 import Environment, FileSystemLoader
 
 
 def main():
-    # Capturar el ID del product_global
+    # Capture the second argv
     id_product = sys.argv[1]
 
-    # declarar donde está la plantilla
+    # Declare where the template
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
     template = env.get_template('SendZoho.html')
 
-    # declara el API a consumir
+    # Declared API  to used
     req_url = "https://api.kieroapi.net/variations/product_funnel/" + id_product
     headersList = {}
     payload = {}
 
-    # Obtener valores del api para construir la plantilla
+    # Get values from the API to build the template
     response = requests.get(req_url, data=payload, headers=headersList)
 
-    # Convertir respuesta del API a JSON
+    # Convert response to JSON
     data = response.json()
 
     # Hacer la operación siempre que este presente data
@@ -41,7 +42,7 @@ def main():
         data_render['breadcrumb'] = breadcrumb.strip("/")
         # Mandar los datos y construir los datos
         output = template.render(data=data_render)
-        # declara donde generar el HTML
+        # Declara donde generar el HTML
         filename = f"build/SendZoho-{id_product}.html"
         if not os.path.exists("build"):
             os.makedirs("build")

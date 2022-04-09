@@ -1,6 +1,3 @@
-import os
-import sys
-
 import requests
 
 # declara el API a consumir
