@@ -74,20 +74,22 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-    gtag('event', 'view_item', {
-        "items": [
-            {
-                "id": "{{ data.product_id}}",
-                "name": "{{ data.product_title | safe }}",
-                "brand": "{{ data.brand | safe }}",
-                "category": "{{ data.breadcrumb | safe }}",
-                "list_position": 1,
-                "quantity": 1,
-                "price": '{{ data.price_product }}',
-                "url": "{{ data.product_link }}"
-            }
-        ]
-    });
+    window.addEventListener('load', function () {
+        gtag('event', 'view_item', {
+            "items": [
+                {
+                    "id": "{{ data.product_id}}",
+                    "name": '{{ data.product_title | safe }}',
+                    "brand": "{{ data.brand | safe }}",
+                    "category": "{{ data.breadcrumb | safe }}",
+                    "list_position": 1,
+                    "quantity": 1,
+                    "price": '{{ data.price_product }}',
+                    "url": "{{ data.product_link }}"
+                }
+            ]
+        });
+    }, false);
 
     function setDiscount(priceProduct, quantityProduct) {
         let discountPercentage = 0;
@@ -143,7 +145,7 @@
             "items": [
                 {
                     "id": "{{ data.product_id}}",
-                    "name": "{{ data.product_title | safe }}",
+                    "name": '{{ data.product_title | safe }}',
                     "brand": "{{ data.brand | safe }}",
                     "category": "{{ data.breadcrumb | safe }}",
                     "list_position": 1,
@@ -199,7 +201,7 @@
             weight: "{{ data.weight }}",
             click_funnel: true,
             funnel_name: "{{ data.funnel_name }}",
-            page_number: "{{ data.page_number }}",
+            page_number: '{{ data.page_number }}',
         };
         let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
         let postResp = axios.post(urlZoho, data, {headers: {"Content-Type": "application/json",},})
@@ -266,7 +268,7 @@
                 "items": [
                     {
                         "id": "{{ data.product_id}}",
-                        "name": "{{ data.product_title | safe }}",
+                        "name": '{{ data.product_title | safe }}',
                         "brand": "{{ data.brand | safe }}",
                         "category": "{{ data.breadcrumb | safe }}",
                         "list_position": 1,

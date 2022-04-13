@@ -37,12 +37,10 @@
     }
 
     gtag('js', new Date());
-    gtag('config', 'UA-144018341-4');
-    gtag('event', 'page_view', {
-            page_title: document.title,
-            page_location: location.href,
-            page_path: location.pathname,
-            send_to: 'UA-144018341-4'
-        }
-    );
+    gtag('config', 'UA-144018341-4', {
+        page_title: document.title,
+        page_location: location.href,
+        page_path: location.pathname,
+    });
+
 </script>
