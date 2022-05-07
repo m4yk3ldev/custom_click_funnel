@@ -78,14 +78,14 @@
         gtag('event', 'view_item', {
             "items": [
                 {
-                    "id": "{{ data.product_id}}",
-                    "name": '{{ data.product_title | safe }}',
-                    "brand": "{{ data.brand | safe }}",
-                    "category": "{{ data.breadcrumb | safe }}",
+                    "id": "72550138",
+                    "name": 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
+                    "brand": "BUNN",
+                    "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                     "list_position": 1,
                     "quantity": 1,
-                    "price": '{{ data.price_product }}',
-                    "url": "{{ data.product_link }}"
+                    "price": '2519105',
+                    "url": "https://kiero.co/detalle/72550138"
                 }
             ]
         });
@@ -129,29 +129,29 @@
 
     function AsignValue() {
         let ref_code = "kieroco-" + new Date().getTime();
-        let discount = setDiscount({{data.price_product}}, 1);
+        let discount = setDiscount(2519105, 1);
         let signature = CryptoJS.MD5(
             "uzIc90bkpXj0aJDh22H67MRJnl~530932~" + ref_code + "~" + discount + "~COP"
         );
         document.getElementById("signature").value = signature.toString();
         document.getElementById("amount").value = discount;
         document.getElementById("referenceCode").value = ref_code;
-        document.getElementById("description").value = `{{ data.product_description | string }}`;
+        document.getElementById("description").value = `El Bunn 13300.0011 VP171BLK PERRODER CAFÉ BREWER con un calentador es perfecto para tiendas de conveniencia, restaurantes familiares, cafés o comensales. Totalmente portátil, se puede usar en cualquier lugar donde hay un tapón, simplemente vierta agua fr`;
 
         gtag('event', 'begin_checkout', {
             "checkout_step": 1,
             "checkout_option": "Payu",
-            "value": "{{ data.price_product }}",
+            "value": "2519105",
             "items": [
                 {
-                    "id": "{{ data.product_id}}",
-                    "name": '{{ data.product_title | safe }}',
-                    "brand": "{{ data.brand | safe }}",
-                    "category": "{{ data.breadcrumb | safe }}",
+                    "id": "72550138",
+                    "name": 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
+                    "brand": "BUNN",
+                    "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                     "list_position": 1,
                     "quantity": 1,
-                    "price": '{{ data.price_product }}',
-                    "url": "{{ data.product_link }}"
+                    "price": '2519105',
+                    "url": "https://kiero.co/detalle/72550138"
                 }
             ]
         });
@@ -173,35 +173,35 @@
             num_id: "0",
             id: ref_code,
             country: "CO",
-            lead_type: "{{ data.lead_type }}",
-            brand: "{{ data.brand }}",
-            category: "{{ data.category }}",
-            category_id: "{{ data.category_id }}",
-            sub_category: "{{ data.sub_category }}",
-            type_client: "{{ data.type_client }}",
-            product_title: '{{ data.product_title | safe }}',
-            product_description: `{{data.product_description | safe}}`,
-            product_id: "{{ data.product_id}}",
-            product_image: "{{ data.product_image }}",
-            main_link: "{{ data.main_link }}",
-            product_brand: "{{ data.product_brand }}",
-            product_category: "{{ data.product_category }}",
-            product_subcategory: "{{ data.product_subcategory }}",
-            price_product: {{data.price_product}},
-            rating: "{{ data.rating }}",
-            cost_of_goods_sold: "{{ data.cost_of_goods_sold}}",
-            asin_link: "amazon.com/dp/{{ data.asin }}",
-            gross_margin: "{{ data.gross_margin }}",
-            gross_margin_percent: "{{data.gross_margin_percent }}",
-            active: {{data.active}},
-            asin: "{{ data.asin }}",
-            product_link: "{{ data.product_link }}",
-            subcategory_link: "kiero.co/categoria/{{ data.product_subcategory }}",
-            margin_percent: "{{ data.margin_percent }}",
-            weight: "{{ data.weight }}",
+            lead_type: "Usuario Registrado que Accedió a los Detalles del Producto",
+            brand: "BUNN",
+            category: "Industria y científico",
+            category_id: "16310161",
+            sub_category: "Cafeteras comerciales",
+            type_client: "standard",
+            product_title: 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
+            product_description: `El Bunn 13300.0011 VP171BLK PERRODER CAFÉ BREWER con un calentador es perfecto para tiendas de conveniencia, restaurantes familiares, cafés o comensales. Totalmente portátil, se puede usar en cualquier lugar donde hay un tapón, simplemente vierta agua fr`,
+            product_id: "72550138",
+            product_image: "https://images-na.ssl-images-amazon.com/images/I/413zcfw6tEL.jpg",
+            main_link: "https://images-na.ssl-images-amazon.com/images/I/413zcfw6tEL.jpg",
+            product_brand: "BUNN",
+            product_category: "Industria y científico",
+            product_subcategory: "Cafeteras comerciales",
+            price_product: 2519105,
+            rating: "4.4",
+            cost_of_goods_sold: "1496636",
+            asin_link: "amazon.com/dp/B0030ZVVNC",
+            gross_margin: "878976.00",
+            gross_margin_percent: "0.35",
+            active: true,
+            asin: "B0030ZVVNC",
+            product_link: "https://kiero.co/detalle/72550138",
+            subcategory_link: "kiero.co/categoria/Cafeteras comerciales",
+            margin_percent: "0.37",
+            weight: "21.99992912498",
             click_funnel: true,
-            funnel_name: "{{ data.funnel_name }}",
-            page_number: '{{ data.page_number }}',
+            funnel_name: "Cafeteras comerciales",
+            page_number: 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
         };
         let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
         let postResp = axios.post(urlZoho, data, {headers: {"Content-Type": "application/json",},})
@@ -238,19 +238,19 @@
             });
 
             fbq("track", "InitiateCheckout", {
-                    content_ids: "{{ data.product_id}}",
-                    content_name: '{{ data.product_title | safe }}',
-                    product_group: '{{ data.type }}',
+                    content_ids: "72550138",
+                    content_name: 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
+                    product_group: 'DRINKING_CUP',
                     content_type: "product",
-                    content_category: "{{ data.product_category }}",
+                    content_category: "Industria y científico",
                     contents: [
                         {
-                            id: "{{ data.product_id}}",
+                            id: "72550138",
                             quantity: 1,
                         },
                     ],
                     currency: "COP",
-                    value: {{data.price_product}},
+                    value: 2519105,
                     num_items: 1,
                     em: correo.value ?? " ",
                     ph: 57 + handleFormatNumber(telephone.value ?? " "),
@@ -264,17 +264,17 @@
             gtag('event', 'checkout_progress', {
                 "checkout_step": 2,
                 "checkout_option": "Payu",
-                "value": "{{ data.price_product }}",
+                "value": "2519105",
                 "items": [
                     {
-                        "id": "{{ data.product_id}}",
-                        "name": '{{ data.product_title | safe }}',
-                        "brand": "{{ data.brand | safe }}",
-                        "category": "{{ data.breadcrumb | safe }}",
+                        "id": "72550138",
+                        "name": 'Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH',
+                        "brand": "BUNN",
+                        "category": "Industria y científico/Equipo y suministros para servicio/Electrodomésticos y equipos para restaurantes/Equipos comerciales para bebidas/Cafeteras comerciales",
                         "list_position": 1,
                         "quantity": 1,
-                        "price": '{{ data.price_product }}',
-                        "url": "{{ data.product_link }}"
+                        "price": '2519105',
+                        "url": "https://kiero.co/detalle/72550138"
                     }
                 ]
             });
@@ -302,13 +302,13 @@
         let raw = JSON.stringify({
             "items": [
                 {
-                    "title": "{{ data.product_title | safe }}",
-                    "description": `{{data.product_description | safe}}`,
-                    "picture_url": "{{ data.product_image }}",
-                    "category_id": "{{ data.product_category }}",
+                    "title": "Bunn 13300.0011 VP171BLK Pourover Coffee Brewer con 1 más cálido, negro 120V601PH",
+                    "description": `El Bunn 13300.0011 VP171BLK PERRODER CAFÉ BREWER con un calentador es perfecto para tiendas de conveniencia, restaurantes familiares, cafés o comensales. Totalmente portátil, se puede usar en cualquier lugar donde hay un tapón, simplemente vierta agua fr`,
+                    "picture_url": "https://images-na.ssl-images-amazon.com/images/I/413zcfw6tEL.jpg",
+                    "category_id": "Industria y científico",
                     "quantity": 1,
                     "currency_id": "COP",
-                    "unit_price": {{ data.price_product }},
+                    "unit_price": 2519105,
                 }
             ],
             "payer": {

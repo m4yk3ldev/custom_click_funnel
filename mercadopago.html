@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Template Code - Checkout Pro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+<main>
+    <button class="btn btn-danger w-100 h-100" id="checkout-btn" onclick="PayMercadoPago()" style="font-size: 24px;border-radius: 60px; justify-content: center; align-items: center;">Checkout!</button>
+</main>
+</body>
+<script type="text/javascript">
+
+
+    // Handle call to backend and generate preference.
+
+    function PayMercadoPago() {
+
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer APP_USR-554768292211559-042216-edb6d6bfe345dd2c7514b6e4daaf5004-1109654332");
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "items": [
+                {
+                    "title": "Dummy Title 3",
+                    "description": "Dummy description",
+                    "picture_url": "http://www.myapp.com/myimage.jpg",
+                    "category_id": "car_electronics",
+                    "quantity": 1,
+                    "currency_id": "USD",
+                    "unit_price": 10
+                }
+            ],
+            "payer": {
+                "phone": {},
+                "identification": {},
+                "address": {}
+            },
+            "payment_methods": {
+                "excluded_payment_methods": [
+                    {}
+                ],
+                "excluded_payment_types": [
+                    {}
+                ]
+            },
+            "shipments": {
+                "free_methods": [
+                    {}
+                ],
+                "receiver_address": {}
+            },
+            "back_urls": {},
+            "differential_pricing": {},
+            "tracks": [],
+            "metadata": {}
+        });
+
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
+            .then(function (response) {
+                console.log({response})
+                return response.json();
+            })
+            .then(function (preference) {
+                window.open(preference.sandbox_init_point);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+</script>
+</html>
