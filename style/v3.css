@@ -1,0 +1,19 @@
+.mercadoPagoBtn {
+    color: #fff !important;
+    font-size: 20px;
+    border-radius: 60px;
+    justify-content: center;
+    align-items: center;
+    background-color: #1F84CE !important;
+    width: 100%;
+}
+
+.payuBtn {
+    font-size: 20px;
+    border-radius: 60px;
+    justify-content: center;
+    align-items: center;
+    background-color: #cf132c !important;
+    color: #fff !important;
+    width: 100%;
+}
