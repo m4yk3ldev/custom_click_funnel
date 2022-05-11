@@ -296,10 +296,15 @@
     }
 
     function PayMercadoPago() {
-        const button = document.getElementById('mercadopagoBtn');
-        button.innerText = "Enviando datos ...";
-        button.classList.replace("btn-primary", "btn-secondary")
-        button.setAttribute("disabled", "disabled");
+        const PayMercadoBtns = document.getElementsByClassName('mercadoPagoBtn');
+        for (let i = 0; i < PayMercadoBtns.length; i++) {
+            let button = PayMercadoBtns[i]
+            button.innerText = "Enviando datos ...";
+            button.classList.replace("btn-primary", "btn-secondary")
+            button.setAttribute("disabled", "disabled");
+
+        }
+
         let myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer APP_USR-554768292211559-042216-edb6d6bfe345dd2c7514b6e4daaf5004-1109654332");
         myHeaders.append("Content-Type", "application/json");
@@ -357,10 +362,12 @@
             })
             .catch(function (error) {
                 console.log(error);
-                alert(error);
-                button.innerHTML = `Comprar con Mercado Pago`;
-                button.classList.replace("btn-secondary", "btn-primary");
-                button.removeAttribute("disabled")
+                for (let i = 0; i < PayMercadoBtns.length; i++) {
+                    let button = PayMercadoBtns[i]
+                    button.innerHTML = `Comprar con Mercado Pago`;
+                    button.classList.replace("btn-secondary", "btn-primary");
+                    button.removeAttribute("disabled")
+                }
             });
     }
 
