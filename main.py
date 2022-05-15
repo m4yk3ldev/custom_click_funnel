@@ -13,7 +13,7 @@ def main():
     # Declare where the template
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
-    template = env.get_template('SendZoho.html')
+    template = env.get_template('SendZoho.html.j2')
 
     # Declared API  to used
     req_url = "https://api.kieroapi.net/variations/product_funnel/" + id_product

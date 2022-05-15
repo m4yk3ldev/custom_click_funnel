@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" style="color: black">
+    aria-hidden="true" style="color: black">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -10,41 +10,41 @@
             </div>
             <div class="modal-body mx-2">
                 <form id="formPayu" class="finish-pay" method="post" name="formPayu"
-                      action="https://checkout.payulatam.com/ppp-web-gateway-payu/">
+                    action="https://checkout.payulatam.com/ppp-web-gateway-payu/">
                     <input name="merchantId" hidden value="530932"/>
                     <input name="accountId" hidden value="532826"/>
                     <div class="form-group my-2">
                         <label for="payuName" style="font-size: 1rem !important">Nombre</label>
                         <input type="text" required name="payerFullName" class="form-control" id="payuName"
-                               aria-describedby="nameHelp"/>
+                            aria-describedby="nameHelp"/>
                         <small id="nameHelp" class="form-text text-muted" style="font-size: 0.8rem !important">Nombre
                             completo</small>
                     </div>
                     <div class="form-group my-2">
                         <label for="payuEmail" style="font-size: 1rem !important">Correo</label>
                         <input type="email" required name="buyerEmail" class="form-control" id="payuEmail"
-                               aria-describedby="emailHelp"/>
+                            aria-describedby="emailHelp"/>
                         <small id="emailHelp" class="form-text text-muted" style="font-size: 0.8rem !important">Correo
                             electrónico</small>
                     </div>
                     <div class="form-group my-2">
                         <label for="payuTelephone" style="font-size: 1rem !important">Teléfono</label>
                         <input type="tel" required name="telephone" class="form-control" id="payuTelephone"
-                               aria-describedby="telephoneHelp"/>
+                            aria-describedby="telephoneHelp"/>
                         <small id="telephoneHelp" class="form-text text-muted" style="font-size: 0.8rem !important">Teléfono</small>
                     </div>
                     <input name="shippingCountry" hidden value="CO"/>
                     <div class="form-group my-2">
                         <label for="payuCity" style="font-size: 1rem !important">Ciudad</label>
                         <input type="text" required name="shippingCity" class="form-control" id="payuCity"
-                               aria-describedby="cityHelp"/>
+                            aria-describedby="cityHelp"/>
                         <small id="cityHelp" class="form-text text-muted" style="font-size: 0.8rem !important">Ciudad de
                             Entrega</small>
                     </div>
                     <div class="form-group my-2">
                         <label for="payuAddress" style="font-size: 1rem !important">Dirección</label>
                         <input type="text" required name="shippingAddress" class="form-control" id="payuAddress"
-                               aria-describedby="addressHelp"/>
+                            aria-describedby="addressHelp"/>
                         <small id="addressHelp" class="form-text text-muted" style="font-size: 0.8rem !important">Dirección
                             de
                             facturación</small>
@@ -60,15 +60,15 @@
                     <input name="responseUrl" value=" https://kiero.co/pay_status?extra4=" hidden/>
                     <input name=" confirmationUrl" value="https://api.kieroapi.net/payuComplete" hidden/>
                     <input type="button" class="button-finish-payu btn btn-primary my-2"
-                           value="Continuar con la transacción" onclick="SubmitForm();" onpress="SubmitForm();"/>
+                        value="Continuar con la transacción" onclick="SubmitForm();" onpress="SubmitForm();"/>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -76,18 +76,25 @@
 <script>
     window.addEventListener('load', function () {
         gtag('event', 'view_item', {
-            "items": [
+            currency: "COP",
+            items: [
                 {
-                    "id": "{{ data.product_id}}",
-                    "name": '{{ data.product_title | safe }}',
-                    "brand": "{{ data.brand | safe }}",
-                    "category": "{{ data.breadcrumb | safe }}",
-                    "list_position": 1,
-                    "quantity": 1,
-                    "price": '{{ data.price_product }}',
-                    "url": "{{ data.product_link }}"
+                    id: "{{ data.product_id}}",
+                    name: '{{ data.product_title | safe }}',
+                    brand: "{{ data.brand | safe }}",
+                    category: "{{ data.breadcrumb | safe }}",
+                    list_position: 1,
+                    quantity: 1,
+                    currency: "COP",
+                    price: {{ data.price_product }},
+                    url: "{{ data.product_link }}",
+                    list_name:"Search Results",
                 }
-            ]
+            ],
+            value: {{ data.price_product }},
+            event_callback: function () {
+                console.log("Dispatch view_item GTAG");
+            }
         });
     }, false);
 
@@ -100,9 +107,9 @@
             discountPercentage = 15;
         }
         let PriceDiscount =
-            priceProduct *
-            quantityProduct *
-            (1 - parseFloat("." + discountPercentage).toFixed(2));
+        priceProduct *
+        quantityProduct *
+        (1 - parseFloat("." + discountPercentage).toFixed(2));
         PriceDiscount = ~~PriceDiscount;
         return PriceDiscount;
     }
@@ -206,12 +213,12 @@
         let urlZoho = "https://api.kieroapi.net/create_lead_zoho";
         let postResp = axios.post(urlZoho, data, {headers: {"Content-Type": "application/json",},})
             .then(function (response) {
-                return response.data.status
-            })
+            return response.data.status
+        })
             .catch(function (error) {
-                console.log(error);
-                return error
-            });
+            console.log(error);
+            return error
+        });
         return postResp
     }
 
@@ -238,28 +245,28 @@
             });
 
             fbq("track", "InitiateCheckout", {
-                    content_ids: "{{ data.product_id}}",
-                    content_name: '{{ data.product_title | safe }}',
-                    product_group: '{{ data.type }}',
-                    content_type: "product",
-                    content_category: "{{ data.product_category }}",
-                    contents: [
-                        {
-                            id: "{{ data.product_id}}",
-                            quantity: 1,
-                        },
-                    ],
-                    currency: "COP",
-                    value: {{data.price_product}},
-                    num_items: 1,
-                    em: correo.value ?? " ",
-                    ph: 57 + handleFormatNumber(telephone.value ?? " "),
-                    event_name: "InitiateCheckout",
-                    eventId: "InitiateCheckout_Kiero_Group_2022",
-                    user_name: fullname[0] ?? " ",
-                    user_last_name: last_name.trim(),
-                    timeTransaction: getDate(),
-                }
+                content_ids: "{{ data.product_id}}",
+                content_name: '{{ data.product_title | safe }}',
+                product_group: '{{ data.type }}',
+                content_type: "product",
+                content_category: "{{ data.product_category }}",
+                contents: [
+                    {
+                        id: "{{ data.product_id}}",
+                        quantity: 1,
+                    },
+                ],
+                currency: "COP",
+                value: {{data.price_product}},
+                num_items: 1,
+                em: correo.value ?? " ",
+                ph: 57 + handleFormatNumber(telephone.value ?? " "),
+                event_name: "InitiateCheckout",
+                eventId: "InitiateCheckout_Kiero_Group_2022",
+                user_name: fullname[0] ?? " ",
+                user_last_name: last_name.trim(),
+                timeTransaction: getDate(),
+            }
             );
             gtag('event', 'checkout_progress', {
                 "checkout_step": 2,
@@ -354,21 +361,48 @@
 
         fetch("https://api.mercadopago.com/checkout/preferences", requestOptions)
             .then(function (response) {
-                return response.json();
-            })
-            .then(function (preference) {
-                window.open(preference.init_point);
 
-            })
-            .catch(function (error) {
-                console.log(error);
-                for (let i = 0; i < PayMercadoBtns.length; i++) {
-                    let button = PayMercadoBtns[i]
-                    button.innerHTML = `Comprar con Mercado Pago`;
-                    button.classList.replace("btn-secondary", "btn-primary");
-                    button.removeAttribute("disabled")
+            return response.json();
+        })
+            .then(function (preference) {
+            window.open(preference.init_point);
+            for (let i = 0; i < PayMercadoBtns.length; i++) {
+                let button = PayMercadoBtns[i]
+                button.innerHTML = `Comprar con Mercado Pago`;
+                button.classList.replace("btn-secondary", "btn-primary");
+                button.removeAttribute("disabled")
+            }
+
+            gtag('event', 'checkout_progress', {
+                "checkout_step": 2,
+                "checkout_option": "Mercado Pago",
+                "value": "{{ data.price_product }}",
+                "items": [
+                    {
+                        "id": "{{ data.product_id}}",
+                        "name": '{{ data.product_title | safe }}',
+                        "brand": "{{ data.brand | safe }}",
+                        "category": "{{ data.breadcrumb | safe }}",
+                        "list_position": 1,
+                        "quantity": 1,
+                        "price": '{{ data.price_product }}',
+                        "url": "{{ data.product_link }}"
+                    }
+                ],
+                event_callback : function (){
+                    console.log("Dispatch checkout_progress by Mercado Pago");
                 }
             });
+        })
+            .catch(function (error) {
+            console.log(error);
+            for (let i = 0; i < PayMercadoBtns.length; i++) {
+                let button = PayMercadoBtns[i]
+                button.innerHTML = `Comprar con Mercado Pago`;
+                button.classList.replace("btn-secondary", "btn-primary");
+                button.removeAttribute("disabled")
+            }
+        });
     }
 
 </script>
