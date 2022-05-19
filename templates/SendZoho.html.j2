@@ -1,5 +1,4 @@
-<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true" style="color: black">
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="color: black">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -373,8 +372,8 @@
                 button.removeAttribute("disabled")
             }
 
-            gtag('event', 'checkout_progress', {
-                "checkout_step": 2,
+            gtag('event', 'begin_checkout', {
+                "checkout_step": 1,
                 "checkout_option": "Mercado Pago",
                 "value": "{{ data.price_product }}",
                 "items": [
