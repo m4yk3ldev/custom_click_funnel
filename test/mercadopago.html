@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Prueba con MercadoPago</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center w-100">
+        <a href="#" class="btn btn-primary w-100 h-100 d-flex payuBtn" data-bs-toggle="modal"
+           data-bs-target="#modalMercadoPago">Comprar con MercadoPago</a>
+    </div>
+    <div class="modal fade" id="modalMercadoPago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" style="color: black">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title">
+                        Por favor agregue los datos de envío
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mx-2">
+
+                    <form id="form-checkout" class="row">
+                        <div class="mb-3 col-8">
+                            <label for="form-checkout__cardNumber" class="form-label">Número de tarjeta</label>
+                            <input type="text" name="cardNumber" id="form-checkout__cardNumber" class="form-control"
+                                   required/>
+                            <img src="" alt="Image of card number" class="img-responsive" hidden id="image-card">
+                        </div>
+                        <div class="mb-3 col-2">
+                            <label for="form-checkout__expirationDate" class="form-label">Fecha</label>
+                            <input type="text" name="expirationDate" id="form-checkout__expirationDate"
+                                   class="form-control" required/>
+                        </div>
+                        <div class="mb-3 col-2">
+                            <label for="form-checkout__securityCode" class="form-label">CCV</label>
+                            <input type="text" name="securityCode" id="form-checkout__securityCode" class="form-control"
+                                   required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="form-checkout__cardholderName" class="form-label">Titular de la tarjeta</label>
+                            <input type="text" name="cardholderName" id="form-checkout__cardholderName"
+                                   class="form-control" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="form-checkout__cardholderEmail" class="form-label">Correo</label>
+                            <input type="email" name="cardholderEmail" id="form-checkout__cardholderEmail"
+                                   class="form-control"
+                                   required/>
+                        </div>
+
+                        <div class="mb-3" hidden>
+                            <label for="form-checkout__issuer" class="form-label">Banco emisor</label>
+                            <select name="issuer" id="form-checkout__issuer" class="form-control"></select>
+                        </div>
+                        <div class="row card-body">
+                            <h5>Información de documentos</h5>
+                            <div class="mb-3 col-2">
+                                <label for="form-checkout__identificationType" class="form-label">Tipo</label>
+                                <select name="identificationType" id="form-checkout__identificationType"
+                                        class="form-control form-select"></select>
+                            </div>
+                            <div class="mb-3 col-10">
+                                <label for="form-checkout__identificationNumber" class="form-label">Número</label>
+                                <input type="text" name="identificationNumber" id="form-checkout__identificationNumber"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="form-checkout__installments" class="form-label">Cuotas</label>
+                            <select name="installments" id="form-checkout__installments"
+                                    class="form-control form-select"></select>
+                        </div>
+                        <button type="submit" id="form-checkout__submit" class="btn btn-primary">Pagar</button>
+                        <div class="progress">
+                            <div value="0" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                                 aria-valuemax="100" hidden>Cargando...
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const mp = new MercadoPago('APP_USR-19d35bad-a8f0-4d14-9def-65d22fa4ad22');
+    // Step #3
+    const cardForm = mp.cardForm({
+        amount: "100.5",
+        autoMount: true,
+        processingMode: 'aggregator',
+        locale: 'es',
+        form: {
+            id: "form-checkout",
+            cardholderName: {
+                id: "form-checkout__cardholderName",
+                placeholder: "Titular de la tarjeta",
+            },
+            cardholderEmail: {
+                id: "form-checkout__cardholderEmail",
+                placeholder: "E-mail",
+            },
+            cardNumber: {
+                id: "form-checkout__cardNumber",
+                placeholder: "Número de la tarjeta",
+            },
+            expirationDate: {
+                id: "form-checkout__expirationDate",
+                placeholder: "MM/YYYY",
+            },
+            securityCode: {
+                id: "form-checkout__securityCode",
+                placeholder: "CCV",
+            },
+            installments: {
+                id: "form-checkout__installments",
+                placeholder: "Cuotas",
+            },
+            identificationType: {
+                id: "form-checkout__identificationType",
+                placeholder: "Tipo de documento",
+            },
+            identificationNumber: {
+                id: "form-checkout__identificationNumber",
+                placeholder: "Número de documento",
+            },
+            issuer: {
+                id: "form-checkout__issuer",
+                placeholder: "Banco emisor",
+            },
+        },
+        callbacks: {
+            onFormMounted: error => {
+                if (error) return console.warn('Form Mounted handling error: ', error)
+                console.log('Form mounted')
+            },
+            onFormUnmounted: error => {
+                if (error) return console.warn('Form Unmounted handling error: ', error)
+                console.log('Form unmounted')
+            },
+            onIdentificationTypesReceived: (error, identificationTypes) => {
+                if (error) return console.warn('identificationTypes handling error: ', error)
+                console.log('Identification types available: ', {identificationTypes})
+            },
+            onPaymentMethodsReceived: (error, paymentMethods) => {
+                const imageCard = document.getElementById("image-card");
+                if (error) {
+                    imageCard.setAttribute("hidden", "true");
+                    return console.warn('paymentMethods handling error: ', error)
+                }
+                console.log('Payment Methods available: ', {paymentMethods})
+
+                imageCard.setAttribute("src", paymentMethods[0].thumbnail)
+                imageCard.removeAttribute("hidden")
+            },
+            onIssuersReceived: (error, issuers) => {
+                if (error) return console.warn('issuers handling error: ', error)
+                console.log('Issuers available: ', issuers)
+            },
+            onInstallmentsReceived: (error, installments) => {
+                if (error) return console.warn('installments handling error: ', error)
+                console.log('Installments available: ', installments)
+            },
+            onCardTokenReceived: (error, token) => {
+                if (error) return console.warn('Token handling error: ', error)
+                console.log('Token available: ', token)
+            },
+            onSubmit: event => {
+                event.preventDefault();
+
+                const {
+                    paymentMethodId: payment_method_id,
+                    issuerId: issuer_id,
+                    cardholderEmail: email,
+                    amount,
+                    token,
+                    installments,
+                    identificationNumber,
+                    identificationType,
+                } = cardForm.getCardFormData();
+                console.log(cardForm.getCardFormData());
+
+                fetch("/process_payment", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        token,
+                        issuer_id,
+                        payment_method_id,
+                        transaction_amount: Number(amount),
+                        installments: Number(installments),
+                        description: "Descripción del producto",
+                        payer: {
+                            email,
+                            identification: {
+                                type: identificationType,
+                                number: identificationNumber,
+                            },
+                        },
+                    }),
+                });
+            },
+            onFetching: (resource) => {
+                console.log("Fetching resource: ", {resource});
+
+                // Animate progress bar
+                const progressBar = document.querySelector(".progress-bar");
+                progressBar.removeAttribute("value");
+
+                return () => {
+                    progressBar.setAttribute("value", "0");
+                };
+            }
+        },
+    });
+</script>
+</body>
+
+</html>
